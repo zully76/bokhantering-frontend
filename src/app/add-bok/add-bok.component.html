@@ -1,0 +1,53 @@
+
+<div class="container mt-5">
+  <h2>Lägg till ny bok</h2>
+
+  <form (ngSubmit)="onSubmit(bookForm)" #bookForm="ngForm">
+    <div class="mb-3">
+      <label for="title" class="form-label">Titel (Título):</label>
+      <input
+        type="text"
+        class="form-control"
+        id="title"
+        name="title"
+        [(ngModel)]="newBok.title"
+        required
+      />
+    </div>
+
+    <div class="mb-3">
+      <label for="author" class="form-label">Författare (Autor):</label>
+      <input
+        type="text"
+        class="form-control"
+        id="author"
+        name="author"
+        [(ngModel)]="newBok.author"
+        required
+      />
+    </div>
+
+    <div class="mb-3">
+      <label for="publicationDate" class="form-label">Publiceringsdatum (Fecha de Publicación):</label>
+      <input
+        type="date"
+        class="form-control"
+        id="publicationDate"
+        name="publicationDate"
+        [(ngModel)]="newBok.publicationDate"
+        required
+      />
+    </div>
+
+    <button type="submit" class="btn btn-success">
+      <i class="fas fa-save"></i> Spara bok (Guardar libro)
+    </button>
+
+    <button type="button" class="btn btn-secondary ms-2" (click)="oncancel()">
+      <i class="fas fa-arrow-left"></i> Avbryt (Cancelar)
+    </button>
+  </form>
+</div>
+
+
+
