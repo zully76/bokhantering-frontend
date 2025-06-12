@@ -1,0 +1,49 @@
+<!-- src/app/register/register.component.html -->
+<!-- Denna mall definierar formuläret för att registrera nya användare. -->
+<div class="container mt-5">
+  <div class="row justify-content-center">
+    <div class="col-md-6">
+      <div class="card">
+        <div class="card-header text-center">
+          <h2>Registrera dig</h2> <!-- Título: Registra tu cuenta -->
+        </div>
+        <div class="card-body">
+          <form (ngSubmit)="onRegister()">
+            <!-- Fält för användarnamn -->
+            <div class="mb-3">
+              <label for="username" class="form-label">Användarnamn</label>
+              <input type="text" id="username" class="form-control" [(ngModel)]="username" name="username" required>
+            </div>
+            <!-- Fält för lösenord -->
+            <div class="mb-3">
+              <label for="password" class="form-label">Lösenord</label>
+              <input type="password" id="password" class="form-control" [(ngModel)]="password" name="password" required>
+            </div>
+            <!-- Fält för att bekräfta lösenord -->
+            <div class="mb-3">
+              <label for="confirmPassword" class="form-label">Bekräfta lösenord</label>
+              <input type="password" id="confirmPassword" class="form-control" [(ngModel)]="confirmPassword" name="confirmPassword" required>
+            </div>
+            <!-- Knapp för att skicka in formuläret -->
+            <div class="d-grid gap-2">
+              <button type="submit" class="btn btn-primary">Registrera</button>
+            </div>
+          </form>
+          <!-- Visar felmeddelanden om det finns några -->
+          <div *ngIf="errorMessage" class="alert alert-danger mt-3">
+            {{ errorMessage }}
+          </div>
+          <!-- Visar framgångsmeddelanden om registreringen lyckas -->
+          <div *ngIf="successMessage" class="alert alert-success mt-3">
+            {{ successMessage }}
+          </div>
+          <!-- Länk till inloggningssidan för användare som redan har ett konto -->
+          <p class="mt-3 text-center">
+            Har du redan ett konto? <a routerLink="/login">Logga in här</a>
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+

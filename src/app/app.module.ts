@@ -11,7 +11,7 @@ import { BoksComponent } from './boks/boks.component';
 import { AddBokComponent } from './add-bok/add-bok.component';
 import { EditBokComponent } from './edit-bok/edit-bok.component';
 import { CitatComponent } from './citat/citat.component';
-
+import { RegisterComponent } from './register/register.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -19,7 +19,8 @@ import { CitatComponent } from './citat/citat.component';
     BoksComponent,
     AddBokComponent,
     EditBokComponent,
-    CitatComponent
+    CitatComponent,
+    RegisterComponent
   ],
   imports: [
     BrowserModule,

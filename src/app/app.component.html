@@ -14,11 +14,15 @@
         </li>
       </ul>
       <ul class="navbar-nav ms-auto">
+        <li class="nav-item me-2" *ngIf="loggedInUsername">
+          <span class="nav-link">Välkommen, {{ loggedInUsername }} till Bokhantering!</span>
+        </li>
         <li class="nav-item me-2"> <button class="btn btn-outline-secondary" (click)="toggleTheme()">
             {{ isDarkTheme ? 'Ljust tema' : 'Mörkt tema' }} </button>
         </li>
         <li class="nav-item">
-          <a class="btn btn-outline-danger" (click)="onLogoutClick()">Logga ut</a>
+          <a class="btn btn-outline-danger" (click)="onLogoutClick()" *ngIf="loggedInUsername">Logga ut</a>
+          <a class="btn btn-outline-primary" routerLink="/login" *ngIf="!loggedInUsername && !isLoginPage">Logga in</a>
         </li>
       </ul>
     </div>
