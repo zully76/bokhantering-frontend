@@ -15,7 +15,8 @@ export interface Bok {
 })
 export class BokService {
 
- private apiUrl = 'http://localhost:5050/api/boks';
+  // Cambiar esta URL a la URL de tu API en Azure
+  private apiUrl = 'https://koden-backend-app-hugqhmfkb0hugff5.swedencentral-01.azurewebsites.net/api/boks'; // Cambiar con tu URL de Azure
 
   constructor(private http: HttpClient) { }
 

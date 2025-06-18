@@ -43,7 +43,7 @@ export class AddBokComponent implements OnInit {
       });
 
     console.log('Försöker spara ny bok:', this.newBok);
-    this.http.post('http://localhost:5050/api/Boks', this.newBok, {headers}).subscribe({
+    this.http.post('http://localhost:7219/api/Boks', this.newBok, {headers}).subscribe({
       next: (response) => {
         console.log('Bok sparad framgångsrikt!', response);
         this.router.navigate(['/boks']);
