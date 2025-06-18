@@ -20,7 +20,7 @@ export class CitatComponent implements OnInit {
 
   ngOnInit(): void {
 
-    const token = localStorage.getItem('token');
+    const token = localStorage.getItem('jwtToken');
     if (!token) {
       alert('Du måste vara inloggad för att se dina favoritcitat.');
       this.router.navigate(['/login']);
