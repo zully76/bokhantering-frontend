@@ -32,7 +32,7 @@
               "node_modules/bootstrap/dist/css/bootstrap.min.css"
             ],
             "scripts": [
-              "node_modules/bootstrap/dist/js/bootstrap.bundle.min.js" // Ladda Bootstrap JavaScript för interaktiva komponenter som menyn
+              "node_modules/bootstrap/dist/js/bootstrap.bundle.min.js"
             ]
           },
           "configurations": {
@@ -102,4 +102,5 @@
     }
   }
 }
+
 
