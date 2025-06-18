@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { FormsModule} from '@angular/forms';
-import { HttpClientModule} from '@angular/common/http';
+import { provideHttpClient, withInterceptors } from '@angular/common/http';
 import { CommonModule } from '@angular/common';
 import { BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import { AppRoutingModule } from './app-routing.module';
@@ -11,7 +11,9 @@ import { BoksComponent } from './boks/boks.component';
 import { AddBokComponent } from './add-bok/add-bok.component';
 import { EditBokComponent } from './edit-bok/edit-bok.component';
 import { CitatComponent } from './citat/citat.component';
-import { RegisterComponent } from './register/register.component';
+import { RegisterComponent } from './register/register.component'; // Sökväg till RegisterComponent
+import { authInterceptor } from './src/app/auth-interceptor/auth.interceptor'; // Sökväg till din interceptor
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -25,12 +27,15 @@ import { RegisterComponent } from './register/register.component';
   imports: [
     BrowserModule,
     AppRoutingModule,
-    HttpClientModule,
     FormsModule,
     CommonModule,
     BrowserAnimationsModule
   ],
-  providers: [],
+  providers: [
+    provideHttpClient(withInterceptors([authInterceptor]))
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
+
+
