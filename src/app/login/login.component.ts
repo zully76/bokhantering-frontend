@@ -12,7 +12,7 @@ export class LoginComponent {
   username: string = '';
   password: string = '';
   errorMessage: string = '';
-  private apiUrl = 'http://localhost:5050/api/auth/login';
+  private apiUrl = 'https://koden-backend-app-hugqhmfkb0hugff5.swedencentral-01.azurewebsites.net/api/auth/login';  // URL till Azure API
 
   constructor(private http: HttpClient, private router: Router) { }
 
@@ -29,16 +29,16 @@ export class LoginComponent {
     this.http.post<any>(this.apiUrl, loginData).subscribe({
       next: (response) => {
         const token = response.token;
-        localStorage.setItem('token', token);
+        localStorage.setItem('jwtToken', token);  // Spara JWT-token i localStorage
 
         try {
           const decodedToken: any = jwtDecode(token);
-          const loggedInUsername = decodedToken.unique_name || 'Användare'; // Viktigt: använder 'unique_name' från token
+          const loggedInUsername = decodedToken.unique_name || 'Användare';  // Hämta användarnamn från token
           localStorage.setItem('loggedInUsername', loggedInUsername);
           console.log('Användarnamn från token:', loggedInUsername);
         } catch (error) {
           console.error('Fel vid avkodning av JWT-token:', error);
-          localStorage.removeItem('token');
+          localStorage.removeItem('jwtToken');
           localStorage.removeItem('loggedInUsername');
           this.errorMessage = 'Ett fel uppstod vid inloggning. Försök igen.';
           return;
@@ -46,7 +46,7 @@ export class LoginComponent {
 
         console.log('Login lyckades! Token:', token);
 
-        this.router.navigate(['/boks']);
+        this.router.navigate(['/boks']);  // Navigera till böcker efter lyckad inloggning
       },
       error: (error) => {
         console.error('Login misslyckades:', error);
@@ -60,9 +60,9 @@ export class LoginComponent {
   }
 
   onLogout(): void {
-    localStorage.removeItem('token');
+    localStorage.removeItem('jwtToken');  // Ta bort token och användarnamn vid logout
     localStorage.removeItem('loggedInUsername');
-    this.router.navigate(['/login']);
+    this.router.navigate(['/login']);  // Navigera till login-sidan vid logout
   }
 }
 

@@ -19,7 +19,7 @@ export class BoksComponent implements OnInit {
   errorMessage: string = '';
   loading: boolean = false;
 
-  private apiUrl = 'http://localhost:5050/api/Boks';
+  private apiUrl = 'https://koden-backend-app-hugqhmfkb0hugff5.swedencentral-01.azurewebsites.net/api/Boks'; // URL till Azure API
 
   constructor(private http: HttpClient, private router: Router) { }
 
@@ -31,7 +31,7 @@ export class BoksComponent implements OnInit {
     this.loading = true;
     this.errorMessage = '';
 
-    const token = localStorage.getItem('token');
+    const token = localStorage.getItem('jwtToken'); // Hämta token
 
     if (!token) {
       this.errorMessage = 'Du är inte inloggad. Vänligen logga in.';
@@ -46,11 +46,9 @@ export class BoksComponent implements OnInit {
 
     this.http.get<Bok[]>(this.apiUrl, { headers }).subscribe({
       next: (data) => {
-
         this.boks = data.map(book => {
           if (book.publicationDate) {
             const date = new Date(book.publicationDate);
-
 
             const year = date.getFullYear();
             const month = (date.getMonth() + 1).toString().padStart(2, '0');
@@ -70,7 +68,7 @@ export class BoksComponent implements OnInit {
         console.error('Kunde inte ladda böcker:', error);
         if (error.status === 401 || error.status === 403) {
           this.errorMessage = 'Din session har gått ut eller är ogiltig. Vänligen logga in igen.';
-          localStorage.removeItem('token');
+          localStorage.removeItem('jwtToken');
           this.router.navigate(['/login']);
         } else {
           this.errorMessage = 'Kunde inte ladda böcker. Ett oväntat fel uppstod.';
@@ -80,7 +78,7 @@ export class BoksComponent implements OnInit {
   }
 
   onLogout(): void {
-    localStorage.removeItem('token');
+    localStorage.removeItem('jwtToken');
     this.router.navigate(['/login']);
     console.log('Du har loggat ut.');
   }
@@ -94,7 +92,7 @@ export class BoksComponent implements OnInit {
       return;
     }
 
-    const token = localStorage.getItem('token');
+    const token = localStorage.getItem('jwtToken');
     if (!token) {
       this.errorMessage = 'Du är inte inloggad. Vänligen logga in.';
       this.router.navigate(['/login']);

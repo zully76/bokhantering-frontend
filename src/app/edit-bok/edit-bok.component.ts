@@ -24,7 +24,7 @@ export class EditBokComponent implements OnInit {
 
   errorMessage: string = '';
   loading: boolean = false;
-  private apiUrl = 'http://localhost:5050/api/Boks';
+  private apiUrl = 'https://koden-backend-app-hugqhmfkb0hugff5.swedencentral-01.azurewebsites.net/api/Boks'; // URL till Azure API
 
   constructor(
     private route: ActivatedRoute,
@@ -48,7 +48,7 @@ export class EditBokComponent implements OnInit {
 
   fetchBok(id: number): void {
     this.loading = true;
-    const token = localStorage.getItem('token');
+    const token = localStorage.getItem('jwtToken');
     if (!token) {
       this.router.navigate(['/login']);
       return;
@@ -77,7 +77,7 @@ export class EditBokComponent implements OnInit {
 
   onSave(): void {
     this.loading = true;
-    const token = localStorage.getItem('token');
+    const token = localStorage.getItem('jwtToken');
     if (!token) {
       this.router.navigate(['/login']);
       return;
@@ -87,7 +87,6 @@ export class EditBokComponent implements OnInit {
       'Authorization': `Bearer ${token}`,
       'Content-Type': 'application/json'
     });
-
 
     this.http.put(`${this.apiUrl}/${this.bok.id}`, this.bok, { headers }).subscribe({
       next: () => {
@@ -101,7 +100,7 @@ export class EditBokComponent implements OnInit {
 
         if (error.status === 401 || error.status === 403) {
             this.errorMessage = 'Din session har gått ut eller är ogiltig. Vänligen logga in igen.';
-            localStorage.removeItem('token');
+            localStorage.removeItem('jwtToken');
             this.router.navigate(['/login']);
         } else if (error.status === 400) {
             this.errorMessage = 'Felaktiga data. Kontrollera inmatningen.';
@@ -116,3 +115,4 @@ export class EditBokComponent implements OnInit {
     this.router.navigate(['/boks']);
   }
 }
+
