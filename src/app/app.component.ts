@@ -1,3 +1,5 @@
+// src/app/app.component.ts
+
 import { Component, OnInit } from '@angular/core';
 import { Router, NavigationEnd, ActivatedRoute } from '@angular/router';
 import { filter } from 'rxjs/operators';
@@ -10,8 +12,8 @@ import { filter } from 'rxjs/operators';
 export class AppComponent implements OnInit {
   title = 'bokhantering-frontend';
   isDarkTheme: boolean = false;
-  loggedInUsername: string | null = null; // För användarnamn
-  isLoginPage: boolean = false; // För att veta om vi är på inloggningssidan
+  loggedInUsername: string | null = null;
+  isLoginPage: boolean = false;
 
   constructor(private router: Router, private activatedRoute: ActivatedRoute) { }
 
@@ -25,11 +27,9 @@ export class AppComponent implements OnInit {
       document.body.classList.remove('dark-theme');
     }
 
-    // Kontrollera användarnamn och sida vid start
     this.checkLoggedInUser();
     this.isLoginPage = this.router.url === '/login';
 
-    // Uppdatera användarnamn och sidstatus vid varje navigering
     this.router.events.pipe(
       filter(event => event instanceof NavigationEnd)
     ).subscribe(() => {
@@ -38,7 +38,6 @@ export class AppComponent implements OnInit {
     });
   }
 
-  // Metod för att kontrollera och sätta användarnamnet
   checkLoggedInUser(): void {
     const username = localStorage.getItem('loggedInUsername');
     if (username) {
@@ -49,9 +48,9 @@ export class AppComponent implements OnInit {
   }
 
   onLogoutClick(): void {
-    localStorage.removeItem('token');
-    localStorage.removeItem('loggedInUsername'); // Rensa användarnamn vid utloggning
-    this.loggedInUsername = null; // Rensa variabeln i komponenten
+    localStorage.removeItem('jwtToken'); // Rensa token
+    localStorage.removeItem('loggedInUsername'); // Rensa användarnamn
+    this.loggedInUsername = null;
     this.router.navigate(['/login']);
   }
 
@@ -66,3 +65,4 @@ export class AppComponent implements OnInit {
     }
   }
 }
+

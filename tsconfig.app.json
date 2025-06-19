@@ -7,7 +7,7 @@
   },
   "files": [
     "src/main.ts",
-    "src/polyfills.ts"  // <--- ¡Esta línea es la que añadimos y debe estar!
+    "src/polyfills.ts"
   ],
   "include": [
     "src/**/*.d.ts"
