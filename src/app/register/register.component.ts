@@ -9,66 +9,68 @@ import { Router } from '@angular/router';
 })
 export class RegisterComponent {
 
-  // Variabler för användarnamn, lösenord och bekräftelse av lösenord
+  // Variables para el nombre de usuario, contraseña y confirmación de la contraseña
   username: string = '';
   password: string = '';
   confirmPassword: string = '';
-  showPassword: boolean = false;  // För att hantera visibilitet av lösenord
+  showPassword: boolean = false;  // Para controlar la visibilidad de la contraseña
 
-  // Felmeddelande och framgångsmeddelande
+  // Mensajes de error y éxito
   errorMessage: string = '';
   successMessage: string = '';
 
-  // API URL för registrering
-  private apiUrl = 'https://koden-backend-app-hugqhmfkb0hugff5.swedencentral-01.azurewebsites.net/api/auth/register'; // URL till Azure API
+  // URL del API para registro (reemplaza con tu URL real)
+  private apiUrl = 'https://koden-backend-app-hugqhmfkb0hugff5.swedencentral-01.azurewebsites.net/api/auth/register'; // URL del API
 
   constructor(private http: HttpClient, private router: Router) { }
 
-  // Funktion för att växla lösenordsvisning
+  // Función para alternar la visibilidad de la contraseña
   togglePassword(): void {
     this.showPassword = !this.showPassword;
   }
 
-  // Funktion för registrering
+  // Función para manejar el registro de un nuevo usuario
   onRegister(): void {
-    this.errorMessage = '';  // Rensa tidigare felmeddelande
-    this.successMessage = '';  // Rensa tidigare framgångsmeddelande
+    this.errorMessage = '';  // Limpiar el mensaje de error
+    this.successMessage = '';  // Limpiar el mensaje de éxito
 
-    // Kontrollera att alla fält är ifyllda
+    // Validación de campos vacíos
     if (!this.username || !this.password || !this.confirmPassword) {
-      this.errorMessage = 'Alla fält måste fyllas i.'; // Felmeddelande om fält är tomma
+      this.errorMessage = 'Alla fält måste fyllas i.';  // Mensaje de error si los campos están vacíos
       return;
     }
 
-    // Kontrollera att lösenorden matchar
+    // Validación de contraseñas coincidentes
     if (this.password !== this.confirmPassword) {
-      this.errorMessage = 'Lösenorden matchar inte.'; // Felmeddelande om lösenorden inte stämmer
+      this.errorMessage = 'Lösenorden matchar inte.';  // Mensaje de error si las contraseñas no coinciden
       return;
     }
 
-    // Förbereda data för registrering
+    // Datos del registro
     const registerData = {
       username: this.username,
       password: this.password
     };
 
-    // Skicka POST-förfrågan till backend för registrering
+    // Enviar la solicitud POST al backend
     this.http.post<any>(this.apiUrl, registerData).subscribe({
       next: (response) => {
-        this.successMessage = 'Registrering lyckades! Du kan nu logga in.'; // Frånregistreringsmeddelande på svenska
+        this.successMessage = 'Registrering lyckades! Du kan nu logga in.';  // Mensaje de éxito después del registro
         console.log('Registrering lyckades:', response);
 
-        // Om registreringen lyckas, omdirigera användaren till login-sidan
-        this.router.navigate(['/login']);
+        // Redirigir al login después de un corto retraso para mostrar el mensaje
+        setTimeout(() => {
+          this.router.navigate(['/login']);
+        }, 2000);  // 2 segundos de espera antes de redirigir
       },
       error: (error) => {
         console.error('Fel vid registrering:', error);
 
-        // Om det finns ett felmeddelande från backend, visa det
+        // Si el backend devuelve un mensaje de error, mostrarlo
         if (error.status === 400 && error.error && error.error.message) {
           this.errorMessage = error.error.message;
         } else {
-          this.errorMessage = 'Ett oväntat fel uppstod vid registrering. Vänligen försök igen.'; // Generellt felmeddelande
+          this.errorMessage = 'Ett oväntat fel uppstod vid registrering. Vänligen försök igen.';  // Mensaje de error general
         }
       }
     });
