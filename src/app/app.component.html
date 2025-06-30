@@ -1,0 +1,35 @@
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+  <div class="container-fluid">
+    <a class="navbar-brand" routerLink="/">Bokhantering</a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNav">
+      <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+        <li class="nav-item">
+          <a class="nav-link" routerLink="/boks" routerLinkActive="active">Böcker</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" routerLink="/citat" routerLinkActive="active">Mina citat</a>
+        </li>
+      </ul>
+      <ul class="navbar-nav ms-auto">
+        <li class="nav-item me-2" *ngIf="loggedInUsername">
+          <span class="nav-link">Välkommen, {{ loggedInUsername }} till Bokhantering!</span>
+        </li>
+        <li class="nav-item me-2"> <button class="btn btn-outline-secondary" (click)="toggleTheme()">
+            {{ isDarkTheme ? 'Ljust tema' : 'Mörkt tema' }} </button>
+        </li>
+        <li class="nav-item">
+          <a class="btn btn-outline-danger" (click)="onLogoutClick()" *ngIf="loggedInUsername">Logga ut</a>
+          <a class="btn btn-outline-primary" routerLink="/login" *ngIf="!loggedInUsername && !isLoginPage">Logga in</a>
+        </li>
+      </ul>
+    </div>
+  </div>
+</nav>
+
+<div class="container-fluid mt-3">
+  <router-outlet></router-outlet>
+</div>
+

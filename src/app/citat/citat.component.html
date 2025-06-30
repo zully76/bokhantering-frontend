@@ -1,0 +1,23 @@
+<div class="container mt-5">
+  <h2>Mina favoritcitat</h2>
+
+  <div class="mb-3">
+    <label for="nyttCitat" class="form-label">Lägg till nytt citat (Max {{ maxCitat }}):</label>
+    <div class="input-group">
+      <input type="text" id="nyttCitat" class="form-control" [(ngModel)]="nyttCitat" maxlength="255">
+      <button class="btn btn-primary" (click)="addCitat()" [disabled]="citatLista.length >= maxCitat">Lägg till citat</button>
+    </div>
+  </div>
+
+  <div *ngIf="citatLista.length > 0">
+    <ul class="list-group">
+      <li *ngFor="let citat of citatLista" class="list-group-item d-flex justify-content-between align-items-center">
+        {{ citat.text }}
+        <button class="btn btn-danger btn-sm" (click)="deleteCitat(citat.id)">Radera</button>
+      </li>
+    </ul>
+  </div>
+  <div *ngIf="citatLista.length === 0" class="alert alert-info mt-3">
+    Inga citat att visa ännu. Lägg till dina favoriter!
+  </div>
+</div>

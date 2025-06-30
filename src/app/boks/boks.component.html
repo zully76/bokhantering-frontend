@@ -1,0 +1,48 @@
+<div class="container mt-4">
+  <div class="row">
+    <div class="col-12">
+      <h1 class="mb-4">Välkommen till Bokhantering!</h1>
+
+      <h2>Alla Böcker</h2>
+
+      <button class="btn btn-primary mb-3" routerLink="/add-bok">Lägg till ny bok</button> <div *ngIf="errorMessage" class="alert alert-danger" role="alert">
+        {{ errorMessage }}
+      </div>
+
+      <div *ngIf="loading" class="text-center my-3">
+        <div class="spinner-border text-primary" role="status">
+          <span class="visually-hidden">Laddar...</span>
+        </div>
+        <p>Laddar böcker...</p>
+      </div>
+
+      <ul class="list-group">
+        <li class="list-group-item d-flex justify-content-between align-items-center" *ngFor="let book of boks">
+          <div>
+            <h5 class="mb-1"><strong>{{ book.title }}</strong></h5>
+            <p class="mb-1">Författare: {{ book.author }}</p>
+            <p class="mb-0">Utgivningsår: {{ book.publicationDate }}</p>
+          </div>
+          <div>
+            <button
+              class="btn btn-warning btn-sm me-2"
+              (click)="onEditBok(book.id)"
+            >
+              Redigera
+            </button>
+            <button
+              class="btn btn-danger btn-sm"
+              (click)="onDeleteBok(book.id)"
+            >
+              Radera
+            </button>
+          </div>
+        </li>
+      </ul>
+
+      <div *ngIf="!loading && boks.length === 0 && !errorMessage" class="text-center my-5">
+        <p>Inga böcker tillgängliga just nu.</p>
+      </div>
+    </div>
+  </div>
+</div>

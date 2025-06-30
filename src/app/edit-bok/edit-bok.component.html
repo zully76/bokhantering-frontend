@@ -1,0 +1,45 @@
+<div class="container mt-5">
+  <h1>Redigera bok</h1>
+
+  <div *ngIf="loading" class="text-center">
+    <div class="spinner-border text-primary" role="status">
+      <span class="visually-hidden">Laddar...</span>
+    </div>
+  </div>
+
+  <div *ngIf="errorMessage" class="alert alert-danger">
+    {{ errorMessage }}
+  </div>
+
+  <form *ngIf="!loading" (ngSubmit)="onSave()">
+    <div class="mb-3">
+      <label for="title" class="form-label">Titel</label>
+      <input id="title" class="form-control" [(ngModel)]="bok.title" name="title" required />
+    </div>
+
+    <div class="mb-3">
+      <label for="author" class="form-label">Författare</label>
+      <input id="author" class="form-control" [(ngModel)]="bok.author" name="author" required />
+    </div>
+
+    <div class="mb-3">
+      <label for="publicationDate" class="form-label">Publiceringsdatum</label>
+      <input
+        id="publicationDate"
+        type="date"
+        class="form-control"
+        [(ngModel)]="bok.publicationDate"
+        name="publicationDate"
+        required
+      />
+    </div>
+
+    <button type="submit" class="btn btn-success">Spara ändringar</button>
+    <button type="button" class="btn btn-secondary ms-2" (click)="onCancel()">Avbryt</button>
+
+  </form>
+</div>
+
+
+
+
