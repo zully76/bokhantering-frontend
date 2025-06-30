@@ -15,13 +15,21 @@
             <div class="mb-3 position-relative">
               <label for="password" class="form-label">Lösenord</label>
               <input [type]="showPassword ? 'text' : 'password'" id="password" class="form-control" [(ngModel)]="password" name="password" required>
-              <i class="bi bi-eye position-absolute" [ngClass]="{'text-muted': !showPassword}" (click)="togglePassword()" style="top: 50%; right: 10px; transform: translateY(-50%); cursor: pointer;"></i>
+
+              <i class="bi position-absolute"
+                 [ngClass]="{'bi-eye': !showPassword, 'bi-eye-slash': showPassword}"
+                 (click)="togglePassword()"
+                 style="top: 50%; right: 10px; transform: translateY(-50%); cursor: pointer;"></i>
             </div>
 
             <div class="mb-3 position-relative">
               <label for="confirmPassword" class="form-label">Bekräfta lösenord</label>
               <input [type]="showPassword ? 'text' : 'password'" id="confirmPassword" class="form-control" [(ngModel)]="confirmPassword" name="confirmPassword" required>
-              <i class="bi bi-eye position-absolute" [ngClass]="{'text-muted': !showPassword}" (click)="togglePassword()" style="top: 50%; right: 10px; transform: translateY(-50%); cursor: pointer;"></i>
+
+              <i class="bi position-absolute"
+                 [ngClass]="{'bi-eye': !showPassword, 'bi-eye-slash': showPassword}"
+                 (click)="togglePassword()"
+                 style="top: 50%; right: 10px; transform: translateY(-50%); cursor: pointer;"></i>
             </div>
 
             <div class="d-grid gap-2">
@@ -29,12 +37,12 @@
             </div>
           </form>
 
-          <!-- Mostrar mensaje de error si hay uno -->
+
           <div *ngIf="errorMessage" class="alert alert-danger mt-3">
             {{ errorMessage }}
           </div>
 
-          <!-- Mostrar mensaje de éxito si el registro fue exitoso -->
+
           <div *ngIf="successMessage" class="alert alert-success mt-3">
             {{ successMessage }}
           </div>
@@ -47,4 +55,3 @@
     </div>
   </div>
 </div>
-
