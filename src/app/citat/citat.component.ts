@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { CitatService } from './citat.service';
+import { CitatService } from '../services/citat.service';
+import { HttpErrorResponse } from '@angular/common/http'; // <-- ¡Agrega esta línea!
 
 interface Citat {
   id: number;
@@ -23,8 +24,6 @@ export class CitatComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    // Här är ändringen för att visa citat för alla.
-    // Vi tar bort token-kontrollen så att alla kan se citaten när komponenten laddas.
     this.loadCitatFromApi();
   }
 
@@ -33,7 +32,7 @@ export class CitatComponent implements OnInit {
       next: (data: Citat[]) => {
         this.citatLista = data;
       },
-      error: (err) => {
+      error: (err: HttpErrorResponse) => { // <-- Se corrige el error TS7006 aquí
         console.error('Kunde inte ladda citat från API:', err);
       }
     });
@@ -55,7 +54,7 @@ export class CitatComponent implements OnInit {
         this.nyttCitat = '';
         this.loadCitatFromApi();
       },
-      error: (err) => {
+      error: (err: HttpErrorResponse) => { // <-- Se corrige el error TS7006 aquí
         console.error('Kunde inte lägga till citat:', err);
       }
     });
@@ -66,7 +65,7 @@ export class CitatComponent implements OnInit {
       next: () => {
         this.loadCitatFromApi();
       },
-      error: (err) => {
+      error: (err: HttpErrorResponse) => { // <-- Se corrige el error TS7006 aquí
         console.error('Kunde inte radera citat:', err);
       }
     });
