@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { CitatService } from './citat.service';
 
 interface Citat {
   id: number;
@@ -16,24 +17,26 @@ export class CitatComponent implements OnInit {
   nyttCitat: string = '';
   maxCitat: number = 5;
 
-  constructor(private router: Router) { }
+  constructor(
+    private router: Router,
+    private citatService: CitatService
+  ) { }
 
   ngOnInit(): void {
-
-    const token = localStorage.getItem('jwtToken');
-    if (!token) {
-      alert('Du måste vara inloggad för att se dina favoritcitat.');
-      this.router.navigate(['/login']);
-      return;
-    }
-    this.loadCitat();
+    // Här är ändringen för att visa citat för alla.
+    // Vi tar bort token-kontrollen så att alla kan se citaten när komponenten laddas.
+    this.loadCitatFromApi();
   }
 
-  loadCitat(): void {
-    const storedCitat = localStorage.getItem('minaCitat');
-    if (storedCitat) {
-      this.citatLista = JSON.parse(storedCitat);
-    }
+  loadCitatFromApi(): void {
+    this.citatService.getCitat().subscribe({
+      next: (data: Citat[]) => {
+        this.citatLista = data;
+      },
+      error: (err) => {
+        console.error('Kunde inte ladda citat från API:', err);
+      }
+    });
   }
 
   addCitat(): void {
@@ -47,21 +50,26 @@ export class CitatComponent implements OnInit {
       return;
     }
 
-    const newId = this.citatLista.length > 0 ? Math.max(...this.citatLista.map(c => c.id)) + 1 : 1;
-    const newCitat: Citat = {
-      id: newId,
-      text: this.nyttCitat.trim()
-    };
-
-    this.citatLista.push(newCitat);
-    localStorage.setItem('minaCitat', JSON.stringify(this.citatLista));
-    this.nyttCitat = '';
+    this.citatService.addCitat({ text: this.nyttCitat }).subscribe({
+      next: () => {
+        this.nyttCitat = '';
+        this.loadCitatFromApi();
+      },
+      error: (err) => {
+        console.error('Kunde inte lägga till citat:', err);
+      }
+    });
   }
 
   deleteCitat(id: number): void {
-    this.citatLista = this.citatLista.filter(citat => citat.id !== id);
-    localStorage.setItem('minaCitat', JSON.stringify(this.citatLista));
+    this.citatService.deleteCitat(id).subscribe({
+      next: () => {
+        this.loadCitatFromApi();
+      },
+      error: (err) => {
+        console.error('Kunde inte radera citat:', err);
+      }
+    });
   }
 }
-
 
