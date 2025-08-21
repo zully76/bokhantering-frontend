@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { CitatService } from '../services/citat.service';
-import { HttpErrorResponse } from '@angular/common/http'; // <-- ¡Agrega esta línea!
+import { HttpErrorResponse } from '@angular/common/http';
 
 interface Citat {
   id: number;
@@ -28,11 +28,11 @@ export class CitatComponent implements OnInit {
   }
 
   loadCitatFromApi(): void {
-    this.citatService.getCitat().subscribe({
+    this.citatService.getPublicCitat().subscribe({
       next: (data: Citat[]) => {
         this.citatLista = data;
       },
-      error: (err: HttpErrorResponse) => { // <-- Se corrige el error TS7006 aquí
+      error: (err: HttpErrorResponse) => {
         console.error('Kunde inte ladda citat från API:', err);
       }
     });
