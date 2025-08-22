@@ -2,11 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { CitatService } from '../services/citat.service';
 import { HttpErrorResponse } from '@angular/common/http';
+import { Citat } from '../models/citat.model';
 
-interface Citat {
-  id: number;
-  text: string;
-}
 
 @Component({
   selector: 'app-citat',
@@ -54,7 +51,7 @@ export class CitatComponent implements OnInit {
         this.nyttCitat = '';
         this.loadCitatFromApi();
       },
-      error: (err: HttpErrorResponse) => { // <-- Se corrige el error TS7006 aquí
+      error: (err: HttpErrorResponse) => {
         console.error('Kunde inte lägga till citat:', err);
       }
     });
@@ -65,7 +62,7 @@ export class CitatComponent implements OnInit {
       next: () => {
         this.loadCitatFromApi();
       },
-      error: (err: HttpErrorResponse) => { // <-- Se corrige el error TS7006 aquí
+      error: (err: HttpErrorResponse) => {
         console.error('Kunde inte radera citat:', err);
       }
     });
